@@ -1,0 +1,2284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DPG Collaborative for Digital Public Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1d22;
+    --ink-soft: #3a3f46;
+    --paper: #faf8f3;
+    --paper-warm: #f2efe6;
+    --paper-deep: #e8e4d8;
+    --rule: #d8d3c4;
+    --rule-soft: #e6e2d4;
+    --muted: #6e6859;
+
+    /* Accents */
+    --accent: #b8421f;          /* terracotta — open / collaborative */
+    --accent-soft: #f0dfd9;
+    --partner: #1c5685;         /* cool blue — partner ecosystem */
+    --partner-soft: #e6eef5;
+    --partner-bg: #f3f7fa;
+
+    /* Category colours for DPG blocks */
+    --cat-infra: #1d6e56;       /* infrastructure — green */
+    --cat-infra-soft: #d8ebe3;
+    --cat-sect: #8b3a2e;        /* sectoral — terracotta */
+    --cat-sect-soft: #f0dfd9;
+    --cat-interop: #5b4d80;     /* interop — violet */
+    --cat-interop-soft: #e0dce8;
+
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-body: 'IBM Plex Sans', system-ui, sans-serif;
+    --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ======== Header ======== */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(250, 248, 243, 0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+  }
+  nav {
+    max-width: 1240px; margin: 0 auto;
+    padding: 16px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 32px;
+  }
+  .brand {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 1.1;
+    cursor: pointer;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .brand .small {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-top: 2px;
+    font-weight: 400;
+  }
+  .nav-links {
+    display: flex; gap: 2px;
+    list-style: none;
+  }
+  .nav-links button {
+    background: none; border: none; cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 13px; font-weight: 500;
+    color: var(--ink-soft);
+    padding: 7px 14px;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+  }
+  .nav-links button:hover { color: var(--accent); background: rgba(184,66,31,0.06); }
+  .nav-links button.active {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* ======== Page system ======== */
+  main { position: relative; z-index: 1; }
+  .page { display: none; animation: fadeIn 0.3s ease; }
+  .page.active { display: block; }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .container {
+    max-width: 1240px; margin: 0 auto;
+    padding: 56px 32px 88px;
+  }
+  .container-wide { max-width: 1240px; margin: 0 auto; padding: 0 32px; }
+
+  /* ======== Type ======== */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+    display: inline-flex; align-items: center; gap: 10px;
+    font-weight: 500;
+  }
+  .eyebrow::before {
+    content: ''; width: 22px; height: 1px; background: var(--accent);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(28px, 3.6vw, 44px);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(22px, 2.6vw, 30px);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 19px;
+    line-height: 1.25;
+    letter-spacing: -0.005em;
+    margin-bottom: 8px;
+  }
+  h4 {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .lede {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 720px;
+  }
+  p { color: var(--ink-soft); }
+
+  /* ======== HOME ======== */
+  .home-hero {
+    padding: 80px 32px 64px;
+    max-width: 1240px; margin: 0 auto;
+  }
+  .home-hero h1 {
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    max-width: 880px;
+    margin-bottom: 20px;
+  }
+  .home-hero .lede {
+    font-size: 17px;
+    max-width: 700px;
+    color: var(--ink-soft);
+  }
+
+  /* Section cards */
+  .home-sections {
+    max-width: 1240px; margin: 0 auto;
+    padding: 16px 32px 80px;
+  }
+  .section-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .section-card {
+    background: var(--paper);
+    padding: 28px 26px;
+    cursor: pointer;
+    transition: background 0.18s ease;
+    display: flex; flex-direction: column;
+    gap: 10px;
+    min-height: 180px;
+  }
+  .section-card:hover { background: var(--paper-warm); }
+  .section-card .num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .section-card h3 {
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+  .section-card p {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .section-card .arrow {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-soft);
+    transition: transform 0.18s ease;
+    display: inline-flex; align-items: center; gap: 6px;
+    letter-spacing: 0.04em;
+  }
+  .section-card:hover .arrow { transform: translateX(4px); color: var(--accent); }
+
+  /* Operating principles — definition list */
+  .home-principles {
+    max-width: 1240px; margin: 0 auto;
+    padding: 0 32px 96px;
+  }
+  .principles-list {
+    margin-top: 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .principle-row {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 48px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    align-items: start;
+  }
+  .principle-row:last-child { border-bottom: 1px solid var(--rule); }
+  .principle-row .label {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    line-height: 1.3;
+  }
+  .principle-row .desc {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    max-width: 640px;
+  }
+
+  /* ======== EXPLORER ======== */
+  .explorer-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 32px;
+    margin-top: 28px;
+  }
+  .component-panel {
+    border: 1px solid var(--rule);
+    background: var(--paper-warm);
+    padding: 22px;
+    height: fit-content;
+    position: sticky; top: 88px;
+  }
+  .component-panel h4 { margin-bottom: 14px; font-size: 11px; }
+  .cat-group { margin-bottom: 18px; }
+  .cat-group:last-child { margin-bottom: 0; }
+  .cat-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .cat-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    display: inline-block;
+  }
+  .cat-dot.infra { background: var(--cat-infra); }
+  .cat-dot.sect { background: var(--cat-sect); }
+  .cat-dot.interop { background: var(--cat-interop); }
+
+  .component-chip {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 12px;
+    margin-bottom: 5px;
+    border: 1px solid transparent;
+    background: var(--paper);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-size: 13px;
+    gap: 8px;
+  }
+  .component-chip:hover { border-color: var(--ink-soft); }
+  .component-chip.selected {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .component-chip .name { font-weight: 500; font-size: 13px; }
+  .component-chip .desc {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 1px;
+    display: block;
+    font-weight: 400;
+  }
+  .component-chip.selected .desc { color: rgba(250, 248, 243, 0.7); }
+  .component-chip .check {
+    width: 14px; height: 14px;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+  .component-chip.selected .check {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+  }
+  .component-chip.selected .check::after { content: '✓'; }
+
+  .canvas {
+    border: 1px solid var(--rule);
+    background:
+      linear-gradient(var(--paper), var(--paper)),
+      repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(26,29,34,0.04) 23px, rgba(26,29,34,0.04) 24px),
+      repeating-linear-gradient(90deg, transparent, transparent 23px, rgba(26,29,34,0.04) 23px, rgba(26,29,34,0.04) 24px);
+    background-blend-mode: multiply;
+    min-height: 540px;
+    padding: 26px 28px;
+    position: relative;
+  }
+  .canvas-header {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .canvas-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: -0.005em;
+  }
+  .canvas-meta {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  #canvas-svg { width: 100%; height: 500px; display: block; }
+
+  .sandbox-cta {
+    margin-top: 18px;
+    padding: 14px 16px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 12.5px;
+    display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer;
+    transition: background 0.15s;
+    text-decoration: none;
+  }
+  .sandbox-cta:hover { background: var(--accent); }
+  .sandbox-cta .label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* ======== BLUEPRINT (split-screen) ======== */
+  .blueprint-layout {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 0;
+    margin-top: 28px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .stack-pane {
+    padding: 24px 26px;
+    border-right: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .stack-pane .pane-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+
+  .stack-layer {
+    margin-bottom: 12px;
+  }
+  .stack-layer:last-child { margin-bottom: 0; }
+  .stack-layer-name {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .stack-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .stack-block {
+    padding: 12px 10px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    font-size: 12px;
+    text-align: center;
+    border-radius: 2px;
+    transition: all 0.25s ease;
+    color: var(--muted);
+    position: relative;
+  }
+  .stack-block .name {
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .stack-block .sub {
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 2px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.04em;
+  }
+  /* highlighted state */
+  .stack-block.highlight {
+    background: var(--paper);
+    transform: scale(1.02);
+  }
+  .stack-block.highlight.infra {
+    border-color: var(--cat-infra);
+    background: var(--cat-infra-soft);
+  }
+  .stack-block.highlight.infra .name { color: var(--cat-infra); }
+  .stack-block.highlight.sect {
+    border-color: var(--cat-sect);
+    background: var(--cat-sect-soft);
+  }
+  .stack-block.highlight.sect .name { color: var(--cat-sect); }
+  .stack-block.highlight.interop {
+    border-color: var(--cat-interop);
+    background: var(--cat-interop-soft);
+  }
+  .stack-block.highlight.interop .name { color: var(--cat-interop); }
+  .stack-block.dimmed {
+    opacity: 0.45;
+  }
+
+  .legend {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule-soft);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .legend span { color: var(--accent); }
+
+  /* RIGHT pane */
+  .steps-pane {
+    padding: 24px 26px;
+    background: var(--paper);
+  }
+  .uc-select-row {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+  }
+  .uc-select-row label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .uc-select {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .uc-select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+  .step-list {
+    display: flex; flex-direction: column;
+    gap: 5px;
+  }
+  .step-item {
+    padding: 10px 12px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border-radius: 2px;
+    position: relative;
+  }
+  .step-item:hover { border-color: var(--ink-soft); }
+  .step-item.active {
+    border: 1.5px solid var(--accent);
+    background: #fdfbf6;
+    padding: 12px 14px;
+  }
+  .step-item .step-num {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-right: 8px;
+    font-weight: 500;
+  }
+  .step-item.active .step-num { color: var(--accent); }
+  .step-item .step-title {
+    font-size: 13px;
+    color: var(--ink-soft);
+    font-weight: 500;
+    display: inline;
+  }
+  .step-item.active .step-title { color: var(--ink); }
+  .step-item .step-detail {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    display: none;
+  }
+  .step-item.active .step-detail { display: block; }
+
+  /* ======== CASE STUDIES ======== */
+  .case {
+    margin-top: 36px;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .case:last-child { border-bottom: none; }
+  .case-header {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 56px;
+    align-items: start;
+  }
+  .case-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+  .case h2 { font-size: 26px; line-height: 1.2; }
+  .case-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    border: 1px solid var(--rule);
+    background: var(--paper-warm);
+  }
+  .case-stat {
+    padding: 18px 20px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .case-stat:nth-child(2n) { border-right: none; }
+  .case-stat:nth-last-child(-n+2) { border-bottom: none; }
+  .case-stat .num {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .case-stat .num em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .case-stat .label {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .case-body {
+    margin-top: 36px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 40px;
+    align-items: start;
+  }
+  .case-pillars h4 {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .pillar {
+    padding: 14px 0;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .pillar h5 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 15px;
+    margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .pillar p {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  /* Quote card with avatar */
+  .quote-card {
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+    padding: 24px 22px;
+    border-radius: 2px;
+  }
+  .quote-card .quote-head {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 16px;
+  }
+  .quote-card .avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+  .quote-card .who {
+    flex: 1;
+  }
+  .quote-card .who-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .quote-card .who-org {
+    font-size: 11.5px;
+    color: var(--muted);
+    margin-top: 2px;
+    line-height: 1.3;
+    font-family: var(--font-mono);
+    letter-spacing: 0.02em;
+  }
+  .quote-card blockquote {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    border-left: 2px solid var(--accent);
+    padding-left: 14px;
+  }
+
+  /* ======== PROCUREMENT GUIDE ======== */
+  .stage-nav {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin: 32px 0 28px;
+  }
+  .stage-tab {
+    background: var(--paper);
+    border: none; cursor: pointer;
+    padding: 18px 16px;
+    text-align: left;
+    transition: background 0.15s;
+    font-family: var(--font-body);
+  }
+  .stage-tab:hover { background: var(--paper-warm); }
+  .stage-tab.active { background: var(--ink); color: var(--paper); }
+  .stage-tab .stage-num {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  .stage-tab.active .stage-num { color: var(--accent); }
+  .stage-tab .stage-name {
+    font-family: var(--font-display);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+
+  .stage-objective {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: 22px 26px;
+    margin-bottom: 28px;
+    border-radius: 0 2px 2px 0;
+  }
+  .stage-objective .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .stage-objective .text {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 19px;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+    color: #4A1B0C;
+    max-width: 880px;
+  }
+
+  .stage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 0;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .activities-col {
+    padding: 24px 26px;
+    border-right: 1px solid var(--rule);
+  }
+  .activities-col .col-label,
+  .assets-col .col-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .activity-list {
+    display: flex; flex-direction: column;
+    gap: 6px;
+  }
+  .activity-item {
+    padding: 12px 14px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border-radius: 2px;
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    text-align: left;
+    width: 100%;
+    font-family: var(--font-body);
+  }
+  .activity-item:hover { border-color: var(--ink-soft); }
+  .activity-item.active {
+    border: 1.5px solid var(--accent);
+    background: var(--accent-soft);
+    padding: 11.5px 13.5px;
+  }
+  .activity-item .a-num {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--muted);
+    flex-shrink: 0;
+    line-height: 1.6;
+    font-weight: 500;
+  }
+  .activity-item.active .a-num { color: var(--accent); font-weight: 600; }
+  .activity-item .a-text { color: var(--ink-soft); }
+  .activity-item.active .a-text { color: var(--ink); font-weight: 500; }
+
+  .assets-col {
+    padding: 24px 26px;
+    background: var(--paper-warm);
+  }
+  .assets-section {
+    padding-bottom: 18px;
+  }
+  .assets-section + .assets-section {
+    border-top: 1px solid var(--rule);
+    padding-top: 18px;
+    margin-top: 18px;
+  }
+  .assets-section.partner {
+    background: var(--partner-bg);
+    margin: 18px -26px -24px -26px;
+    padding: 18px 26px 24px;
+    border-top: 1px solid var(--partner-soft);
+  }
+  .assets-section .src-label {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 12px;
+  }
+  .assets-section .src-marker {
+    width: 9px; height: 9px;
+  }
+  .assets-section.open .src-marker {
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .assets-section.partner .src-marker {
+    background: var(--partner);
+    transform: rotate(45deg);
+  }
+  .assets-section .src-name {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .assets-section.open .src-name { color: var(--accent); }
+  .assets-section.partner .src-name { color: var(--partner); }
+  .assets-section .src-source {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    margin-left: 4px;
+  }
+
+  .asset-list {
+    display: flex; flex-direction: column;
+    gap: 8px;
+    list-style: none;
+  }
+  .asset-list li {
+    padding: 10px 14px;
+    background: var(--paper);
+    border: 1px solid var(--rule-soft);
+    border-radius: 2px;
+  }
+  .assets-section.partner .asset-list li {
+    border: 1px solid var(--partner-soft);
+    border-left: 2px solid var(--partner);
+  }
+  .asset-name {
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 13.5px;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .asset-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* ======== PARTNER ECOSYSTEM ======== */
+  .standards-list {
+    margin-top: 28px;
+    border-top: 1px solid var(--rule);
+  }
+  .standards-list .principle-row .label {
+    color: var(--ink);
+  }
+
+  .partners-section {
+    margin-top: 56px;
+  }
+  .partners-section h2 {
+    margin-bottom: 8px;
+  }
+  .partners-section .lede {
+    margin-bottom: 28px;
+    font-size: 14.5px;
+  }
+
+  .partners-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .partner-card {
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    padding: 24px;
+    transition: all 0.15s ease;
+    display: flex; flex-direction: column;
+    gap: 14px;
+  }
+  .partner-card:hover {
+    border-color: var(--ink);
+    background: var(--paper-warm);
+  }
+  .partner-head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    gap: 14px;
+  }
+  .partner-name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 19px;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .partner-region {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+    text-align: right;
+    line-height: 1.5;
+    flex-shrink: 0;
+  }
+  .partner-desc {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .partner-dpgs {
+    display: flex; flex-wrap: wrap; gap: 5px;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .dpg-tag {
+    padding: 4px 10px;
+    font-size: 10.5px;
+    font-family: var(--font-mono);
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  .dpg-tag.lead {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .partner-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule-soft);
+  }
+  .partner-meta .label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .partner-meta .value {
+    font-size: 12px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .partners-foot {
+    margin-top: 36px;
+    padding: 24px 28px;
+    background: var(--paper-warm);
+    border: 1px dashed var(--rule);
+    text-align: center;
+  }
+  .partners-foot h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: -0.005em;
+    font-size: 16px;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .partners-foot p {
+    font-size: 13px;
+    color: var(--muted);
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  /* ======== Footer ======== */
+  footer {
+    border-top: 1px solid var(--ink);
+    padding: 40px 32px 28px;
+    background: var(--paper);
+    position: relative; z-index: 1;
+    margin-top: 40px;
+  }
+  .footer-inner {
+    max-width: 1240px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .footer-brand h4 {
+    font-family: var(--font-display);
+    font-size: 17px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .footer-brand p {
+    font-size: 12.5px;
+    color: var(--muted);
+    max-width: 360px;
+    line-height: 1.55;
+  }
+  footer ul { list-style: none; }
+  footer li {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 5px;
+    line-height: 1.4;
+  }
+  footer .col-label {
+    margin-bottom: 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .footer-bottom {
+    max-width: 1240px;
+    margin: 28px auto 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* SVG canvas styling */
+  .node-rect {
+    fill: var(--paper);
+    stroke: var(--ink);
+    stroke-width: 1.4;
+  }
+  .node-rect.infra { stroke: var(--cat-infra); }
+  .node-rect.sect { stroke: var(--cat-sect); }
+  .node-rect.interop { stroke: var(--cat-interop); }
+  .node-band { height: 5px; }
+  .node-band.infra { fill: var(--cat-infra); }
+  .node-band.sect { fill: var(--cat-sect); }
+  .node-band.interop { fill: var(--cat-interop); }
+  .node-name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 17px;
+    fill: var(--ink);
+  }
+  .node-desc {
+    font-family: var(--font-body);
+    font-size: 11px;
+    fill: var(--muted);
+  }
+  .node-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .node-tag.infra { fill: var(--cat-infra); }
+  .node-tag.sect { fill: var(--cat-sect); }
+  .node-tag.interop { fill: var(--cat-interop); }
+  .flow-line {
+    stroke: var(--ink-soft);
+    stroke-width: 1.25;
+    fill: none;
+  }
+  .flow-line.dashed { stroke-dasharray: 4 3; }
+  .flow-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    fill: var(--ink-soft);
+    letter-spacing: 0.04em;
+  }
+
+  /* Responsive */
+  @media (max-width: 980px) {
+    nav { padding: 12px 18px; gap: 14px; }
+    .nav-links button { padding: 6px 9px; font-size: 12px; }
+    .container, .home-hero, .home-sections, .home-principles { padding-left: 20px; padding-right: 20px; }
+    .section-grid, .partners-grid { grid-template-columns: 1fr; }
+    .principle-row { grid-template-columns: 1fr; gap: 6px; padding: 16px 0; }
+    .explorer-layout { grid-template-columns: 1fr; }
+    .component-panel { position: static; }
+    .case-header, .case-body { grid-template-columns: 1fr; gap: 28px; }
+    .stage-grid, .blueprint-layout { grid-template-columns: 1fr; }
+    .activities-col, .stack-pane { border-right: none; border-bottom: 1px solid var(--rule); }
+    .stage-nav { grid-template-columns: 1fr 1fr; }
+    .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+    .home-hero h1 { font-size: 30px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="#" class="brand" data-page="home">
+      DPG Collaborative
+      <span class="small">for Digital Public Services</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><button data-page="home" class="active">Home</button></li>
+      <li><button data-page="explorer">Solution explorer</button></li>
+      <li><button data-page="blueprint">Blueprint</button></li>
+      <li><button data-page="cases">Case studies</button></li>
+      <li><button data-page="procurement">Procurement guide</button></li>
+      <li><button data-page="partners">Partner ecosystem</button></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+<!-- ===================== HOME ===================== -->
+<section class="page active" id="page-home">
+  <div class="home-hero">
+    <div class="eyebrow">DPG Collaborative</div>
+    <h1>Integrated digital public services, built on open foundations.</h1>
+    <p class="lede">Six leading Digital Public Goods working together to support governments in delivering integrated, citizen-centric services. Designed around what governments need to do — not what platforms want to sell.</p>
+  </div>
+
+  <div class="home-sections">
+    <div class="section-grid">
+      <div class="section-card" data-page="explorer">
+        <div class="num">01 — VISUAL</div>
+        <h3>Solution explorer</h3>
+        <p>Compose your own integrated solution by selecting components and seeing how they connect.</p>
+        <span class="arrow">Open explorer →</span>
+      </div>
+      <div class="section-card" data-page="blueprint">
+        <div class="num">02 — REFERENCE</div>
+        <h3>Digital public services blueprint</h3>
+        <p>Trace end-to-end flows through the integrated government stack.</p>
+        <span class="arrow">View blueprint →</span>
+      </div>
+      <div class="section-card" data-page="cases">
+        <div class="num">03 — EVIDENCE</div>
+        <h3>Country case studies</h3>
+        <p>How Sri Lanka and the Philippines have deployed integrated DPG stacks at national scale.</p>
+        <span class="arrow">Read studies →</span>
+      </div>
+      <div class="section-card" data-page="procurement">
+        <div class="num">04 — METHOD</div>
+        <h3>Procurement guide</h3>
+        <p>A staged playbook from discovery through scale, with assets and partner support at each step.</p>
+        <span class="arrow">Open guide →</span>
+      </div>
+      <div class="section-card" data-page="partners" style="grid-column: 1 / -1; min-height: 160px;">
+        <div class="num">05 — ECOSYSTEM</div>
+        <h3>Partner ecosystem</h3>
+        <p>System integrators with demonstrated capability across multiple DPGs, accountable to shared open delivery standards.</p>
+        <span class="arrow">Browse partners →</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-principles">
+    <div class="eyebrow">Operating principles</div>
+    <h2>A coordinated approach, not a centralised one.</h2>
+
+    <div class="principles-list">
+      <div class="principle-row">
+        <div class="label">Country ownership and sovereignty</div>
+        <div class="desc">Governments retain full control over systems, data, and how solutions are evolved over time.</div>
+      </div>
+      <div class="principle-row">
+        <div class="label">Driven by public service outcomes</div>
+        <div class="desc">Success is measured by real-world impact on citizens — access, inclusion, service quality.</div>
+      </div>
+      <div class="principle-row">
+        <div class="label">Built for interoperability</div>
+        <div class="desc">Open interfaces and non-proprietary standards enable integrated, end-to-end services without lock-in.</div>
+      </div>
+      <div class="principle-row">
+        <div class="label">Security by design</div>
+        <div class="desc">Strong security practices ensure that systems, data and integrations are protected and trusted.</div>
+      </div>
+      <div class="principle-row">
+        <div class="label">Sustainable by design</div>
+        <div class="desc">Affordable to run, maintainable by a competitive ecosystem, with active upstream contribution.</div>
+      </div>
+      <div class="principle-row">
+        <div class="label">Complementarity over competition</div>
+        <div class="desc">DPGs are positioned to work together as components of integrated services — not as rival platforms.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== EXPLORER ===================== -->
+<section class="page" id="page-explorer">
+  <div class="container">
+    <div class="eyebrow">Tool · 01</div>
+    <h1>Solution explorer</h1>
+    <p class="lede">Select components from the panel to compose an integrated solution. See how Digital Public Goods combine to deliver end-to-end services for your citizens.</p>
+
+    <div class="explorer-layout">
+      <aside class="component-panel">
+        <h4>DPG components</h4>
+
+        <div class="cat-group">
+          <div class="cat-label"><span class="cat-dot infra"></span>Infrastructure</div>
+          <div class="component-chip" data-comp="mosip">
+            <div>
+              <span class="name">MOSIP</span>
+              <span class="desc">Foundational digital identity</span>
+            </div>
+            <span class="check"></span>
+          </div>
+          <div class="component-chip" data-comp="mifos">
+            <div>
+              <span class="name">Mifos</span>
+              <span class="desc">Payments &amp; financial inclusion</span>
+            </div>
+            <span class="check"></span>
+          </div>
+        </div>
+
+        <div class="cat-group">
+          <div class="cat-label"><span class="cat-dot interop"></span>Interoperability</div>
+          <div class="component-chip" data-comp="openfn">
+            <div>
+              <span class="name">OpenFn</span>
+              <span class="desc">Workflow &amp; AI orchestration</span>
+            </div>
+            <span class="check"></span>
+          </div>
+        </div>
+
+        <div class="cat-group">
+          <div class="cat-label"><span class="cat-dot sect"></span>Sectoral systems</div>
+          <div class="component-chip" data-comp="dhis2">
+            <div>
+              <span class="name">DHIS2</span>
+              <span class="desc">Health information</span>
+            </div>
+            <span class="check"></span>
+          </div>
+          <div class="component-chip" data-comp="opencrvs">
+            <div>
+              <span class="name">OpenCRVS</span>
+              <span class="desc">Civil registration &amp; vital statistics</span>
+            </div>
+            <span class="check"></span>
+          </div>
+          <div class="component-chip" data-comp="openspp">
+            <div>
+              <span class="name">OpenSPP</span>
+              <span class="desc">Social protection</span>
+            </div>
+            <span class="check"></span>
+          </div>
+        </div>
+
+        <a class="sandbox-cta" href="#" onclick="event.preventDefault();">
+          <div>
+            <span class="label">Live environment</span>
+            <span>Open the sandbox</span>
+          </div>
+          <span style="font-family: var(--font-mono);">→</span>
+        </a>
+      </aside>
+
+      <div class="canvas">
+        <div class="canvas-header">
+          <div class="canvas-title">Birth notification, registration &amp; identity</div>
+          <div class="canvas-meta">Illustrative reference flow</div>
+        </div>
+        <svg viewBox="0 0 680 380" preserveAspectRatio="xMidYMid meet" style="width:100%; height:auto; display:block;">
+          <defs>
+            <marker id="ahf" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+              <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </marker>
+          </defs>
+
+          <text x="20" y="36" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="2" fill="#6e6859" font-weight="500">SECTORAL</text>
+          <text x="20" y="172" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="2" fill="#6e6859" font-weight="500">INTEROP</text>
+          <text x="20" y="308" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="2" fill="#6e6859" font-weight="500">INFRA</text>
+
+          <line x1="20" y1="42" x2="660" y2="42" stroke="#e8e4d8" stroke-width="0.5"/>
+          <line x1="20" y1="178" x2="660" y2="178" stroke="#e8e4d8" stroke-width="0.5"/>
+          <line x1="20" y1="314" x2="660" y2="314" stroke="#e8e4d8" stroke-width="0.5"/>
+
+          <g>
+            <rect x="80" y="60" width="160" height="80" rx="3" fill="#faf8f3" stroke="#8b3a2e" stroke-width="1.4"/>
+            <rect x="80" y="60" width="160" height="5" fill="#8b3a2e"/>
+            <text x="94" y="84" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1.4" fill="#8b3a2e" font-weight="500">SECTORAL</text>
+            <text x="94" y="108" font-family="Fraunces, serif" font-size="17" font-weight="500" fill="#1a1d22">DHIS2</text>
+            <text x="94" y="125" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#6e6859">Health information</text>
+          </g>
+
+          <g>
+            <rect x="440" y="60" width="160" height="80" rx="3" fill="#faf8f3" stroke="#8b3a2e" stroke-width="1.4"/>
+            <rect x="440" y="60" width="160" height="5" fill="#8b3a2e"/>
+            <text x="454" y="84" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1.4" fill="#8b3a2e" font-weight="500">SECTORAL</text>
+            <text x="454" y="108" font-family="Fraunces, serif" font-size="17" font-weight="500" fill="#1a1d22">OpenCRVS</text>
+            <text x="454" y="125" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#6e6859">Civil registration</text>
+          </g>
+
+          <g>
+            <rect x="260" y="200" width="160" height="80" rx="3" fill="#faf8f3" stroke="#5b4d80" stroke-width="1.4"/>
+            <rect x="260" y="200" width="160" height="5" fill="#5b4d80"/>
+            <text x="274" y="224" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1.4" fill="#5b4d80" font-weight="500">INTEROP</text>
+            <text x="274" y="248" font-family="Fraunces, serif" font-size="17" font-weight="500" fill="#1a1d22">OpenFn</text>
+            <text x="274" y="265" font-family="IBM Plex Sans, sans-serif" font-size="11" fill="#6e6859">Workflow &amp; orchestration</text>
+          </g>
+
+          <g>
+            <rect x="440" y="332" width="160" height="40" rx="3" fill="#faf8f3" stroke="#1d6e56" stroke-width="1.4"/>
+            <rect x="440" y="332" width="160" height="5" fill="#1d6e56"/>
+            <text x="454" y="358" font-family="Fraunces, serif" font-size="15" font-weight="500" fill="#1a1d22">MOSIP</text>
+            <text x="554" y="358" text-anchor="end" font-family="IBM Plex Sans, sans-serif" font-size="10" fill="#6e6859">Identity</text>
+          </g>
+
+          <path d="M 160 140 L 160 175 L 340 175 L 340 200" fill="none" stroke="#3a3f46" stroke-width="1.25" marker-end="url(#ahf)"/>
+          <rect x="226" y="167" width="68" height="14" fill="#faf8f3"/>
+          <text x="260" y="178" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#3a3f46" letter-spacing="0.4">birth notify</text>
+
+          <path d="M 380 200 L 380 175 L 520 175 L 520 140" fill="none" stroke="#3a3f46" stroke-width="1.25" marker-end="url(#ahf)"/>
+          <rect x="406" y="167" width="56" height="14" fill="#faf8f3"/>
+          <text x="434" y="178" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#3a3f46" letter-spacing="0.4">register</text>
+
+          <path d="M 560 140 L 560 332" fill="none" stroke="#3a3f46" stroke-width="1.25" marker-end="url(#ahf)"/>
+          <rect x="528" y="226" width="78" height="14" fill="#faf8f3"/>
+          <text x="567" y="237" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#3a3f46" letter-spacing="0.4">UIN creation</text>
+
+          <path d="M 100 140 L 100 352 L 440 352" fill="none" stroke="#3a3f46" stroke-width="1.25" stroke-dasharray="4 3" marker-end="url(#ahf)"/>
+          <rect x="180" y="345" width="36" height="14" fill="#faf8f3"/>
+          <text x="198" y="356" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#3a3f46" letter-spacing="0.4">auth</text>
+
+          <path d="M 480 140 L 480 332" fill="none" stroke="#3a3f46" stroke-width="1.25" stroke-dasharray="4 3" marker-end="url(#ahf)"/>
+          <rect x="462" y="226" width="36" height="14" fill="#faf8f3"/>
+          <text x="480" y="237" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#3a3f46" letter-spacing="0.4">auth</text>
+
+          <g transform="translate(508, 22)">
+            <line x1="0" y1="6" x2="22" y2="6" stroke="#3a3f46" stroke-width="1.25"/>
+            <text x="28" y="9" font-family="IBM Plex Mono, monospace" font-size="9" fill="#6e6859" letter-spacing="0.4">data</text>
+            <line x1="76" y1="6" x2="98" y2="6" stroke="#3a3f46" stroke-width="1.25" stroke-dasharray="4 3"/>
+            <text x="104" y="9" font-family="IBM Plex Mono, monospace" font-size="9" fill="#6e6859" letter-spacing="0.4">auth</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== BLUEPRINT ===================== -->
+<section class="page" id="page-blueprint">
+  <div class="container">
+    <div class="eyebrow">Tool · 02</div>
+    <h1>Digital public services blueprint</h1>
+    <p class="lede">A reference architecture for the integrated government stack. Choose a use case on the right; the components involved at each step light up on the left.</p>
+
+    <div class="blueprint-layout">
+
+      <!-- LEFT: stack -->
+      <div class="stack-pane">
+        <div class="pane-label">The integrated stack</div>
+
+        <div class="stack-layer">
+          <div class="stack-layer-name">Citizen interface</div>
+          <div class="stack-row">
+            <div class="stack-block" data-id="portal"><div class="name">Portal</div><div class="sub">Self-service</div></div>
+            <div class="stack-block" data-id="field"><div class="name">Field app</div><div class="sub">Assisted</div></div>
+            <div class="stack-block" data-id="ussd"><div class="name">USSD / IVR</div><div class="sub">Low-bandwidth</div></div>
+          </div>
+        </div>
+
+        <div class="stack-layer">
+          <div class="stack-layer-name">Sectoral systems</div>
+          <div class="stack-row">
+            <div class="stack-block sect" data-id="dhis2"><div class="name">DHIS2</div><div class="sub">Health</div></div>
+            <div class="stack-block sect" data-id="opencrvs"><div class="name">OpenCRVS</div><div class="sub">Civil reg.</div></div>
+            <div class="stack-block sect" data-id="openspp"><div class="name">OpenSPP</div><div class="sub">Social prot.</div></div>
+          </div>
+        </div>
+
+        <div class="stack-layer">
+          <div class="stack-layer-name">Interoperability</div>
+          <div class="stack-row">
+            <div class="stack-block interop" data-id="openfn"><div class="name">OpenFn</div><div class="sub">Workflow</div></div>
+            <div class="stack-block interop" data-id="api"><div class="name">API standards</div><div class="sub">FHIR · OAuth2</div></div>
+            <div class="stack-block" data-id="audit"><div class="name">Audit &amp; consent</div><div class="sub">Cross-cutting</div></div>
+          </div>
+        </div>
+
+        <div class="stack-layer">
+          <div class="stack-layer-name">Infrastructure</div>
+          <div class="stack-row">
+            <div class="stack-block infra" data-id="mosip"><div class="name">MOSIP</div><div class="sub">Identity</div></div>
+            <div class="stack-block infra" data-id="mifos"><div class="name">Mifos</div><div class="sub">Payments</div></div>
+            <div class="stack-block" data-id="hosting"><div class="name">Hosting</div><div class="sub">Cloud / on-prem</div></div>
+          </div>
+        </div>
+
+        <div class="legend"><span>●</span> = involved in the selected step</div>
+      </div>
+
+      <!-- RIGHT: use case + steps -->
+      <div class="steps-pane">
+        <div class="uc-select-row">
+          <label>Use case</label>
+          <select class="uc-select" id="uc-select">
+            <option value="birth">Birth → identity → social protection</option>
+            <option value="health">Health insurance &amp; claims</option>
+            <option value="payment">Government-to-person payment</option>
+            <option value="death">Death registration &amp; estate</option>
+          </select>
+        </div>
+
+        <div class="step-list" id="step-list">
+          <!-- populated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CASES ===================== -->
+<section class="page" id="page-cases">
+  <div class="container">
+    <div class="eyebrow">Reference · 03</div>
+    <h1>Country case studies</h1>
+    <p class="lede">Real-world deployments showing how governments have used DPG building blocks to deliver integrated public services. These patterns are repeatable.</p>
+
+    <article class="case">
+      <div class="case-header">
+        <div>
+          <div class="case-meta">Sri Lanka · 2022 — present</div>
+          <h2>Integrated digital public services for 22 million citizens</h2>
+          <p style="margin-top: 14px; max-width: 640px; font-size: 14.5px; line-height: 1.55;">Sri Lanka has connected DHIS2, MOSIP, OpenCRVS and OpenSPP into a coherent national stack — anchored by an in-country Digital Government Experience Centre that supports cross-ministerial use cases for civil registration, health and social protection.</p>
+        </div>
+        <div class="case-stats">
+          <div class="case-stat">
+            <div class="num"><em>22M</em></div>
+            <div class="label">Population served</div>
+          </div>
+          <div class="case-stat">
+            <div class="num">04</div>
+            <div class="label">DPGs deployed</div>
+          </div>
+          <div class="case-stat">
+            <div class="num"><em>95%</em></div>
+            <div class="label">Birth registration coverage</div>
+          </div>
+          <div class="case-stat">
+            <div class="num">&lt;5d</div>
+            <div class="label">Birth certificate processing</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-body">
+        <div class="case-pillars">
+          <h4>Outcomes &amp; impact</h4>
+          <div class="pillar">
+            <h5>Hospital-to-registry integration</h5>
+            <p>DHIS2-to-OpenCRVS integration via OpenFn enables automatic birth notifications from maternity units, reducing manual processing.</p>
+          </div>
+          <div class="pillar">
+            <h5>Digital identity from birth</h5>
+            <p>Integration with MOSIP enables every registered child to receive a foundational digital identity at the point of birth.</p>
+          </div>
+          <div class="pillar">
+            <h5>Social protection eligibility</h5>
+            <p>Civil registration records feed OpenSPP to support automated eligibility assessment for mothers and newborns.</p>
+          </div>
+          <div class="pillar">
+            <h5>Reduced processing time</h5>
+            <p>Average time to receive a birth certificate reduced from 4–6 weeks to under 5 days through digitisation and integration.</p>
+          </div>
+        </div>
+
+        <aside class="quote-card">
+          <div class="quote-head">
+            <div class="avatar">SL</div>
+            <div class="who">
+              <div class="who-name">Senior official</div>
+              <div class="who-org">Ministry of Public Administration · Sri Lanka</div>
+            </div>
+          </div>
+          <blockquote>This is not just a registration system — it is the foundation of a digital identity ecosystem that will serve our citizens for a generation.</blockquote>
+        </aside>
+      </div>
+    </article>
+
+    <article class="case">
+      <div class="case-header">
+        <div>
+          <div class="case-meta">Philippines · 2021 — present</div>
+          <h2>Identity-linked social protection at national scale</h2>
+          <p style="margin-top: 14px; max-width: 640px; font-size: 14.5px; line-height: 1.55;">The Philippines has paired MOSIP-based foundational identity with OpenSPP for social protection and OpenCRVS for civil registration — enabling identity-anchored eligibility, payments and beneficiary management across one of the world's largest social protection programmes.</p>
+        </div>
+        <div class="case-stats">
+          <div class="case-stat">
+            <div class="num"><em>110M</em></div>
+            <div class="label">Population covered</div>
+          </div>
+          <div class="case-stat">
+            <div class="num">03</div>
+            <div class="label">DPGs deployed</div>
+          </div>
+          <div class="case-stat">
+            <div class="num"><em>4.4M</em></div>
+            <div class="label">Households in programme registry</div>
+          </div>
+          <div class="case-stat">
+            <div class="num">G2P</div>
+            <div class="label">Identity-linked payment rails</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-body">
+        <div class="case-pillars">
+          <h4>Outcomes &amp; impact</h4>
+          <div class="pillar">
+            <h5>Identity-anchored eligibility</h5>
+            <p>PhilSys identity binding into OpenSPP enables deduplicated, verifiable beneficiary records across programmes and ministries.</p>
+          </div>
+          <div class="pillar">
+            <h5>Faster, more accurate payments</h5>
+            <p>Identity-linked payment rails reduce leakage and ghost beneficiaries, with cycle times shortened and reconciliation automated.</p>
+          </div>
+          <div class="pillar">
+            <h5>Cross-ministerial coordination</h5>
+            <p>Shared infrastructure connects DSWD social protection programmes with PSA civil registration through standard interfaces.</p>
+          </div>
+          <div class="pillar">
+            <h5>Progressive adoption</h5>
+            <p>Started with identity, layered on social protection, then civil registration — demonstrating staged, low-risk adoption of the stack.</p>
+          </div>
+        </div>
+
+        <aside class="quote-card">
+          <div class="quote-head">
+            <div class="avatar">PH</div>
+            <div class="who">
+              <div class="who-name">Senior official</div>
+              <div class="who-org">Dept. of Social Welfare &amp; Development · Philippines</div>
+            </div>
+          </div>
+          <blockquote>Building on open Digital Public Goods has let us extend our social protection reach without surrendering control of our data or our roadmap.</blockquote>
+        </aside>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ===================== PROCUREMENT GUIDE ===================== -->
+<section class="page" id="page-procurement">
+  <div class="container">
+    <div class="eyebrow">Method · 04</div>
+    <h1>Procurement guide</h1>
+    <p class="lede">A staged pathway from discovery through scale. At each stage, you lead a clear set of activities — supported by open assets from the collaborative and additional resources you can access through the partner ecosystem.</p>
+
+    <div class="stage-nav" id="stage-nav">
+      <button class="stage-tab active" data-stage="0">
+        <span class="stage-num">STAGE 01</span>
+        <span class="stage-name">Discover</span>
+      </button>
+      <button class="stage-tab" data-stage="1">
+        <span class="stage-num">STAGE 02</span>
+        <span class="stage-name">Explore</span>
+      </button>
+      <button class="stage-tab" data-stage="2">
+        <span class="stage-num">STAGE 03</span>
+        <span class="stage-name">Evaluate &amp; procure</span>
+      </button>
+      <button class="stage-tab" data-stage="3">
+        <span class="stage-num">STAGE 04</span>
+        <span class="stage-name">Implement</span>
+      </button>
+      <button class="stage-tab" data-stage="4">
+        <span class="stage-num">STAGE 05</span>
+        <span class="stage-name">Scale</span>
+      </button>
+    </div>
+
+    <div id="stage-content-host"></div>
+  </div>
+</section>
+
+<!-- ===================== PARTNERS ===================== -->
+<section class="page" id="page-partners">
+  <div class="container">
+    <div class="eyebrow">Ecosystem · 05</div>
+    <h1>Partner ecosystem</h1>
+    <p class="lede">System integrators with demonstrated capability across multiple Digital Public Goods. Partners deliver integrated, cross-DPG solutions and contribute back to the platforms and assets they implement.</p>
+
+    <div class="eyebrow" style="margin-top: 48px;">Common standards · all listed partners</div>
+    <h2>Open delivery standards</h2>
+    <p style="max-width: 720px; font-size: 14.5px; margin-top: 8px;">Every partner listed below operates against a shared set of standards designed to protect your ownership of the systems you procure, sustain the underlying Digital Public Goods, and maintain a competitive ecosystem of implementers.</p>
+
+    <div class="standards-list principles-list">
+      <div class="principle-row">
+        <div class="label">Multi-DPG capability</div>
+        <div class="desc">Active implementation or support of at least two DPGs in the collaborative, with a pathway toward three or more.</div>
+      </div>
+      <div class="principle-row">
+        <div class="label">Open architectures</div>
+        <div class="desc">Implementations use open standards and open interfaces — no proprietary lock-in layers.</div>
+      </div>
+      <div class="principle-row">
+        <div class="label">Transferable delivery</div>
+        <div class="desc">Systems can be maintained, extended or transferred to other partners by your government over time.</div>
+      </div>
+      <div class="principle-row">
+        <div class="label">Reusable assets</div>
+        <div class="desc">Contribution of integration components, blueprints or playbooks to the shared collaborative asset base.</div>
+      </div>
+      <div class="principle-row">
+        <div class="label">Upstream contribution</div>
+        <div class="desc">Adherence to each DPG's sustainability mechanism — DHIS2 Shared Services Fee or equivalent contribution models.</div>
+      </div>
+      <div class="principle-row">
+        <div class="label">Security &amp; data ethics</div>
+        <div class="desc">Documented security practices, privacy-by-design, and ethical data handling across all engagements.</div>
+      </div>
+      <div class="principle-row">
+        <div class="label">Country leadership</div>
+        <div class="desc">Engagements led with your government as primary actor — partner roles are clear, time-bound and visible.</div>
+      </div>
+      <div class="principle-row">
+        <div class="label">Continuous activity</div>
+        <div class="desc">Listing maintained through ongoing implementations or contributions; inactive members lose visibility.</div>
+      </div>
+    </div>
+
+    <div class="partners-section">
+      <div class="eyebrow">Listed partners</div>
+      <h2>Multi-DPG implementation partners</h2>
+      <p class="lede">An illustrative directory of partners with demonstrated cross-platform delivery experience.</p>
+
+      <div class="partners-grid" id="partners-grid"></div>
+
+      <div class="partners-foot">
+        <h4>Become a partner</h4>
+        <p>System integrators with multi-DPG capability and a track record of open, transferable delivery can apply to join. Listings are illustrative; a formal accreditation framework is being developed as part of the collaborative's partner ecosystem workstream.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h4>DPG Collaborative for Digital Public Services</h4>
+      <p>A voluntary alignment of leading Digital Public Goods working together to support governments in delivering integrated, citizen-centric services.</p>
+    </div>
+    <div>
+      <div class="col-label">Members</div>
+      <ul>
+        <li>DHIS2</li>
+        <li>OpenCRVS</li>
+        <li>OpenSPP</li>
+        <li>OpenFn</li>
+        <li>Mifos</li>
+        <li>MOSIP</li>
+      </ul>
+    </div>
+    <div>
+      <div class="col-label">Workstreams</div>
+      <ul>
+        <li>Business development &amp; procurement guidelines</li>
+        <li>Shared AI &amp; interoperability tooling</li>
+        <li>Partner ecosystem</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© DPG Collaborative · 2026</span>
+    <span>Open by default</span>
+  </div>
+</footer>
+
+<script>
+  // ============= ROUTER =============
+  const pages = ['home','explorer','blueprint','cases','procurement','partners'];
+  function navigate(page) {
+    pages.forEach(p => {
+      document.getElementById('page-' + p).classList.toggle('active', p === page);
+    });
+    document.querySelectorAll('.nav-links button').forEach(b => {
+      b.classList.toggle('active', b.dataset.page === page);
+    });
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    if (page === 'explorer') renderCanvas();
+    if (page === 'blueprint') renderBlueprint();
+    if (page === 'procurement') renderStage(currentStage);
+    if (page === 'partners') renderPartners();
+  }
+  document.querySelectorAll('[data-page]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.preventDefault();
+      navigate(el.dataset.page);
+    });
+  });
+
+  // ============= EXPLORER (decorative picker, static canvas) =============
+  // Components shown as 'selected' to match the static reference diagram.
+  const explorerSelected = new Set(['mosip', 'openfn', 'dhis2', 'opencrvs']);
+
+  function applyExplorerSelection() {
+    document.querySelectorAll('.component-chip').forEach(chip => {
+      chip.classList.toggle('selected', explorerSelected.has(chip.dataset.comp));
+    });
+  }
+
+  document.querySelectorAll('.component-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const id = chip.dataset.comp;
+      if (explorerSelected.has(id)) explorerSelected.delete(id);
+      else explorerSelected.add(id);
+      applyExplorerSelection();
+    });
+  });
+
+  function renderCanvas() {
+    applyExplorerSelection();
+  }
+
+  // ============= BLUEPRINT =============
+  const USECASES = {
+    birth: {
+      label: 'Birth → identity → social protection',
+      steps: [
+        { title: 'Birth at health facility', detail: 'Mother is admitted to a maternity unit; antenatal and delivery records are captured in your facility’s health information system.', highlight: ['dhis2', 'field'] },
+        { title: 'Hospital notifies civil registry', detail: 'A digital birth notification flows from DHIS2 via OpenFn into OpenCRVS for the registrar to action.', highlight: ['dhis2', 'openfn', 'opencrvs', 'api'] },
+        { title: 'Civil registration completed', detail: 'A registrar reviews and completes registration; a digital birth certificate is issued and linked to the parents.', highlight: ['opencrvs'] },
+        { title: 'Identity issued at birth', detail: 'A foundational digital identity is generated for the newborn (UIN creation in MOSIP) and bound to the civil registration record.', highlight: ['opencrvs', 'mosip'] },
+        { title: 'Eligibility for social protection', detail: 'Social protection systems consume the new civil registration and identity records to assess eligibility for maternal and infant benefits.', highlight: ['opencrvs', 'openspp', 'mosip'] },
+        { title: 'Benefit payment to mother', detail: 'Approved benefits are disbursed to an identity-linked account through the payments layer with full audit trail.', highlight: ['openspp', 'mifos', 'mosip', 'audit'] },
+      ],
+    },
+    health: {
+      label: 'Health insurance & claims',
+      steps: [
+        { title: 'Citizen authenticates at clinic', detail: 'A patient presents at a health facility; identity is verified using the foundational identity system.', highlight: ['mosip', 'portal'] },
+        { title: 'Eligibility check', detail: 'The clinic checks the patient’s health insurance eligibility against the social protection registry.', highlight: ['openspp', 'openfn', 'api'] },
+        { title: 'Service delivered & recorded', detail: 'Clinical encounter is captured in the health information system, including diagnosis and procedures performed.', highlight: ['dhis2'] },
+        { title: 'Claim submitted', detail: 'A claim is generated and routed to the payer through the workflow layer.', highlight: ['dhis2', 'openfn'] },
+        { title: 'Claim adjudicated & paid', detail: 'The claim is adjudicated, approved, and payment routed to the provider through identity-linked payment rails.', highlight: ['mifos', 'mosip', 'audit'] },
+      ],
+    },
+    payment: {
+      label: 'Government-to-person payment',
+      steps: [
+        { title: 'Programme enrolment', detail: 'A household is enrolled into a social protection programme; eligibility is assessed using civil registration and identity records.', highlight: ['openspp', 'opencrvs', 'mosip'] },
+        { title: 'Beneficiary verified', detail: 'Identity is verified at enrolment to prevent duplication and fraud.', highlight: ['mosip', 'field'] },
+        { title: 'Payment instruction generated', detail: 'Programme cycle generates a payment instruction routed via the workflow layer to the payments provider.', highlight: ['openspp', 'openfn'] },
+        { title: 'Funds disbursed', detail: 'Funds are disbursed to an identity-linked account; failed payments are flagged and resubmitted automatically.', highlight: ['mifos', 'mosip'] },
+        { title: 'Reconciliation & audit', detail: 'Disbursement records are reconciled back to the programme registry with full audit trail.', highlight: ['openspp', 'mifos', 'audit'] },
+      ],
+    },
+    death: {
+      label: 'Death registration & estate',
+      steps: [
+        { title: 'Death notification', detail: 'A death is reported at a facility or by a community informant; notification reaches the civil registration system.', highlight: ['dhis2', 'openfn', 'opencrvs'] },
+        { title: 'Death registered', detail: 'Registrar completes registration; the deceased identity is flagged across infrastructure systems.', highlight: ['opencrvs', 'mosip'] },
+        { title: 'Programme adjustments', detail: 'Social protection programmes are notified to suspend or adjust benefits linked to the deceased.', highlight: ['opencrvs', 'openspp', 'openfn'] },
+        { title: 'Survivor entitlements', detail: 'Where applicable, survivor benefits are issued to next of kin via identity-linked accounts.', highlight: ['openspp', 'mifos', 'mosip'] },
+      ],
+    },
+  };
+
+  let currentUC = 'birth';
+  let currentStep = 0;
+
+  document.getElementById('uc-select').addEventListener('change', e => {
+    currentUC = e.target.value;
+    currentStep = 0;
+    renderBlueprint();
+  });
+
+  function renderBlueprint() {
+    const uc = USECASES[currentUC];
+    const list = document.getElementById('step-list');
+    list.innerHTML = uc.steps.map((s, i) => `
+      <div class="step-item ${i === currentStep ? 'active' : ''}" data-idx="${i}">
+        <span class="step-num">${String(i+1).padStart(2,'0')}</span><span class="step-title">${s.title}</span>
+        <div class="step-detail">${s.detail}</div>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('.step-item').forEach(el => {
+      el.addEventListener('click', () => {
+        currentStep = parseInt(el.dataset.idx);
+        renderBlueprint();
+      });
+    });
+
+    // Highlight blocks in stack
+    const highlight = new Set(uc.steps[currentStep].highlight);
+    document.querySelectorAll('.stack-block').forEach(b => {
+      const id = b.dataset.id;
+      b.classList.toggle('highlight', highlight.has(id));
+      b.classList.toggle('dimmed', !highlight.has(id));
+    });
+  }
+
+  // ============= PROCUREMENT GUIDE =============
+  const STAGES = [
+    {
+      name: 'Discover',
+      objective: 'Find out whether integrated DPG-based solutions can address the public service challenges your government is trying to solve — and frame those solutions around the use cases that matter to your citizens.',
+      activities: [
+        {
+          text: 'Identify priority public service challenges where integrated solutions would unlock value',
+          open: [
+            { name: 'Common narrative & use-case framing', desc: 'Shared positioning of integrated value, written around government priorities.' },
+            { name: 'Country case studies', desc: 'Sri Lanka and Philippines reference deployments showing real outcomes.' },
+          ],
+          partner: [
+            { name: 'In-country discovery briefings', desc: 'Tailored sessions led by partners with delivery experience in similar country contexts.' },
+          ],
+        },
+        {
+          text: 'Engage with the collaborative through this site, the sandbox or member DPG channels',
+          open: [
+            { name: 'Solution explorer', desc: 'Interactive composition tool for early-stage discovery of how DPGs combine.' },
+            { name: 'Integrated DPG sandbox', desc: 'Pre-configured environment where you can see the stack working end-to-end.' },
+          ],
+          partner: [],
+        },
+        {
+          text: 'Build internal awareness across ministries and digital transformation units',
+          open: [
+            { name: 'Common narrative & use-case framing', desc: 'Slide-ready content you can adapt for ministerial briefings.' },
+            { name: 'Use case video walkthroughs', desc: '10–15 short recordings of integrated flows for non-technical audiences.' },
+          ],
+          partner: [
+            { name: 'Cross-ministerial briefing facilitation', desc: 'Partners can convene and facilitate alignment sessions across ministries.' },
+          ],
+        },
+        {
+          text: 'Convene initial conversations with international financing and development partners',
+          open: [
+            { name: 'Donor-aligned positioning content', desc: 'Framing the integrated DPG approach against major donor priorities.' },
+            { name: 'Country case studies', desc: 'Evidence base for donor conversations.' },
+          ],
+          partner: [
+            { name: 'Donor-aligned positioning packs', desc: 'Custom proposals showing how integrated solutions map to specific donor mandates.' },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'Explore',
+      objective: 'Build confidence in how DPG components compose into the services you need to deliver — by seeing them work end-to-end and learning from peer governments who have done it before.',
+      activities: [
+        {
+          text: 'Walk through end-to-end use case flows aligned to your priorities',
+          open: [
+            { name: 'Digital public services blueprint', desc: 'Reference architecture with traceable use case flows.' },
+            { name: 'Use case video walkthroughs', desc: 'Step-by-step recordings, hospital birth through to social protection payment.' },
+          ],
+          partner: [],
+        },
+        {
+          text: 'Access integrated demonstration environments to see services in operation',
+          open: [
+            { name: 'Integrated DPG sandbox', desc: 'Pre-configured environment running the full stack end-to-end.' },
+            { name: 'Joint government demonstrations', desc: 'Live, multi-DPG sessions delivered jointly by collaborative members.' },
+          ],
+          partner: [
+            { name: 'Country-tailored sandbox configurations', desc: 'Demonstration environments adapted to your local data and regulations.' },
+          ],
+        },
+        {
+          text: 'Map national priorities to specific DPG configurations and adoption pathways',
+          open: [
+            { name: 'Reference architecture blueprints', desc: 'Patterns for combining DPGs to deliver specific use cases.' },
+            { name: 'Progressive adoption guidance', desc: 'How other governments have started small and grown the stack over time.' },
+          ],
+          partner: [
+            { name: 'Architecture workshops', desc: 'Facilitated sessions to map your priorities to specific configurations.' },
+          ],
+        },
+        {
+          text: 'Engage with peer governments to learn from comparable deployments',
+          open: [
+            { name: 'Country case studies', desc: 'Detailed evidence from Sri Lanka, Philippines and other deployments.' },
+          ],
+          partner: [
+            { name: 'Peer-to-peer government exchanges', desc: 'Facilitated visits to existing national deployments.' },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'Evaluate & procure',
+      objective: 'Define what you need, choose how it will be delivered and supported, and run a procurement that gives you a working integrated solution backed by long-term operational arrangements.',
+      activities: [
+        {
+          text: 'Define functional and non-functional requirements aligned to priority use cases',
+          open: [
+            { name: 'Reusable proposal templates', desc: 'Structured templates covering integrated solutions and delivery models.' },
+            { name: 'Reference architecture blueprints', desc: 'Technical foundation you can incorporate directly into requirements.' },
+          ],
+          partner: [
+            { name: 'Procurement-ready solution architectures', desc: 'Customised technical designs that can be incorporated into your RFP.' },
+          ],
+        },
+        {
+          text: 'Select your delivery model: build-operate-maintain, managed service, or hybrid',
+          open: [
+            { name: 'Managed service commercial framework', desc: 'How to package multi-year services covering hosting, support and upgrades.' },
+            { name: 'Delivery model decision guide', desc: 'Trade-offs between build-operate-maintain and managed service models.' },
+          ],
+          partner: [
+            { name: 'Country-specific cost models', desc: 'Detailed costing including infrastructure, support tiers and sustainability fees.' },
+          ],
+        },
+        {
+          text: 'Develop your business case including cost, sustainability and donor alignment',
+          open: [
+            { name: 'Reusable proposal templates', desc: 'Business case framework adaptable to your context.' },
+            { name: 'Total cost of ownership reference', desc: 'Indicative cost ranges from comparable deployments.' },
+          ],
+          partner: [
+            { name: 'Integrated proposal authoring', desc: 'Joint partner-led proposals with single accountable lead integrator.' },
+          ],
+        },
+        {
+          text: 'Run procurement aligned with national frameworks; engage qualified Implementation Partners',
+          open: [
+            { name: 'Partner ecosystem directory', desc: 'Multi-DPG capable integrators who meet shared open delivery standards.' },
+            { name: 'Open delivery standards reference', desc: 'Standards your selected partner should commit to.' },
+          ],
+          partner: [],
+        },
+      ],
+    },
+    {
+      name: 'Implement',
+      objective: 'Move from contract to working integrated services in production — through phased delivery that reduces risk, builds your team’s capability, and embeds long-term operational ownership in your government.',
+      activities: [
+        {
+          text: 'Run an analysis and design phase across organisation, people, and systems',
+          open: [
+            { name: 'Implementation standards & planning templates', desc: 'Shared planning artefacts for consistent delivery across the stack.' },
+            { name: 'Organisational readiness checklist', desc: 'Cross-cutting prep across institutions, people and processes.' },
+          ],
+          partner: [
+            { name: 'Discovery & design engagements', desc: 'Partner-led analysis tailored to your context.' },
+          ],
+        },
+        {
+          text: 'Pilot with a defined scope and clear proof points before scale-up',
+          open: [
+            { name: 'Phased delivery playbook', desc: 'Analysis → pilot → scale-up methodology, including go-live and handover.' },
+            { name: 'Integration components & connectors', desc: 'Reusable workflow integrations between DPGs.' },
+          ],
+          partner: [
+            { name: 'Pilot delivery management', desc: 'Partner accountable for cross-DPG delivery and integration risk during pilot.' },
+          ],
+        },
+        {
+          text: 'Deliver coordinated implementation across system integrators, DPG teams and your government',
+          open: [
+            { name: 'Integration components & connectors', desc: 'Reusable workflow integrations between DPGs (e.g. DHIS2↔OpenCRVS via OpenFn).' },
+            { name: 'Deployment blueprints', desc: 'Infrastructure, security and scaling configurations.' },
+          ],
+          partner: [
+            { name: 'End-to-end delivery management', desc: 'Single-throat-to-choke partner accountable for cross-DPG delivery.' },
+            { name: 'Local engineering & configuration teams', desc: 'On-the-ground capability for installation, configuration and integration.' },
+          ],
+        },
+        {
+          text: 'Establish operational, support and governance arrangements',
+          open: [
+            { name: 'Operations & support reference model', desc: 'How to structure ongoing operations across the stack.' },
+            { name: 'Governance pattern library', desc: 'Cross-ministerial governance arrangements from comparable deployments.' },
+          ],
+          partner: [
+            { name: 'Change management & capacity building', desc: 'Structured training programmes for ministry staff, registrars and field workers.' },
+            { name: 'Managed hosting & operations', desc: 'Multi-year operate-maintain services covering uptime, upgrades and 24/7 support.' },
+          ],
+        },
+      ],
+    },
+    {
+      name: 'Scale',
+      objective: 'Extend the value of your initial deployment by reusing the shared infrastructure you’ve built — making each new use case faster, cheaper and lower-risk than the last.',
+      activities: [
+        {
+          text: 'Identify additional use cases that can leverage your existing integrated stack',
+          open: [
+            { name: 'Use case extension guidance', desc: 'How deployed components can be reused for additional services across sectors.' },
+            { name: 'Cross-sector integration patterns', desc: 'Proven patterns for layering new services on existing stack.' },
+          ],
+          partner: [
+            { name: 'Use case scoping engagements', desc: 'Partner-led discovery of which next use cases offer highest value.' },
+          ],
+        },
+        {
+          text: 'Extend deployment across additional ministries or geographies',
+          open: [
+            { name: 'Cross-ministerial expansion playbook', desc: 'How other governments have extended deployments across institutions.' },
+          ],
+          partner: [
+            { name: 'Cross-ministerial expansion programmes', desc: 'Structured rollout to additional ministries reusing shared infrastructure.' },
+          ],
+        },
+        {
+          text: 'Continuously improve services based on operational data and citizen feedback',
+          open: [
+            { name: 'Operational benchmarks', desc: 'Reference performance, uptime and cost data from comparable deployments.' },
+            { name: 'Service improvement playbook', desc: 'How to translate operational data and feedback into service changes.' },
+          ],
+          partner: [
+            { name: 'Continuous improvement engagements', desc: 'Ongoing partner-led optimisation of services based on usage data.' },
+            { name: 'Long-term operations partnership', desc: 'Multi-year managed service with embedded innovation and roadmap support.' },
+          ],
+        },
+        {
+          text: 'Contribute lessons and reusable assets back to the collaborative ecosystem',
+          open: [
+            { name: 'Asset contribution guidelines', desc: 'How to package and share what you’ve built so other governments can reuse it.' },
+            { name: 'Country exchange community', desc: 'Forums and events for peer learning across deployments.' },
+          ],
+          partner: [],
+        },
+      ],
+    },
+  ];
+
+  let currentStage = 0;
+  let currentActivity = 0;
+
+  document.querySelectorAll('.stage-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.stage-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentStage = parseInt(tab.dataset.stage);
+      currentActivity = 0;
+      renderStage(currentStage);
+    });
+  });
+
+  function renderStage(idx) {
+    const s = STAGES[idx];
+    const host = document.getElementById('stage-content-host');
+    host.innerHTML = `
+      <div class="stage-objective">
+        <div class="label">Your objective at this stage · ${s.name}</div>
+        <div class="text">${s.objective}</div>
+      </div>
+      <div class="stage-grid">
+        <div class="activities-col">
+          <div class="col-label">Your activities · click to see supporting assets</div>
+          <div class="activity-list" id="activity-list">
+            ${s.activities.map((a, i) => `
+              <button class="activity-item ${i === currentActivity ? 'active' : ''}" data-idx="${i}">
+                <span class="a-num">A${i+1}</span><span class="a-text">${a.text}</span>
+              </button>
+            `).join('')}
+          </div>
+        </div>
+        <div class="assets-col" id="assets-col">
+          ${renderAssets(s.activities[currentActivity])}
+        </div>
+      </div>
+    `;
+
+    document.querySelectorAll('.activity-item').forEach(el => {
+      el.addEventListener('click', () => {
+        currentActivity = parseInt(el.dataset.idx);
+        renderStage(currentStage);
+      });
+    });
+  }
+
+  function renderAssets(activity) {
+    const openHtml = activity.open && activity.open.length ? `
+      <div class="assets-section open">
+        <div class="src-label">
+          <span class="src-marker"></span>
+          <span class="src-name">Open · collaborative</span>
+          <span class="src-source">from the DPG Collaborative</span>
+        </div>
+        <ul class="asset-list">
+          ${activity.open.map(a => `<li><span class="asset-name">${a.name}</span><span class="asset-desc">${a.desc}</span></li>`).join('')}
+        </ul>
+      </div>
+    ` : '';
+
+    const partnerHtml = activity.partner && activity.partner.length ? `
+      <div class="assets-section partner">
+        <div class="src-label">
+          <span class="src-marker"></span>
+          <span class="src-name">Partner-supported</span>
+          <span class="src-source">from the partner ecosystem</span>
+        </div>
+        <ul class="asset-list">
+          ${activity.partner.map(a => `<li><span class="asset-name">${a.name}</span><span class="asset-desc">${a.desc}</span></li>`).join('')}
+        </ul>
+      </div>
+    ` : `
+      <div class="assets-section partner">
+        <div class="src-label">
+          <span class="src-marker"></span>
+          <span class="src-name">Partner-supported</span>
+          <span class="src-source">from the partner ecosystem</span>
+        </div>
+        <p style="font-size: 12.5px; color: var(--muted); font-style: italic; margin: 4px 0 0;">No partner-supported assets currently mapped to this activity.</p>
+      </div>
+    `;
+
+    return openHtml + partnerHtml;
+  }
+
+  // ============= PARTNERS =============
+  const PARTNERS = [
+    {
+      name: 'HISP Centre',
+      region: 'Africa · Asia · LatAm',
+      desc: 'Long-standing global network supporting DHIS2 deployments and increasingly integrating with civil registration, identity and social protection platforms.',
+      dpgs: [['DHIS2', true], ['OpenCRVS', false], ['OpenFn', false]],
+      base: 'Oslo / global',
+      since: '15+ years',
+    },
+    {
+      name: 'Beyond Essential Systems',
+      region: 'Pacific · Southeast Asia',
+      desc: 'Health and civil registration delivery specialists with a track record of integrated deployments in island and small-state contexts.',
+      dpgs: [['OpenCRVS', true], ['DHIS2', false], ['OpenFn', false]],
+      base: 'Melbourne',
+      since: '10+ years',
+    },
+    {
+      name: 'Jembi Health Systems',
+      region: 'Africa · Southeast Asia',
+      desc: 'Open-source health informatics specialists with cross-platform interoperability expertise across DHIS2 and OpenCRVS environments.',
+      dpgs: [['DHIS2', true], ['OpenCRVS', false], ['OpenFn', false]],
+      base: 'Cape Town',
+      since: '12+ years',
+    },
+    {
+      name: 'Ona',
+      region: 'Sub-Saharan Africa · South Asia',
+      desc: 'Open data and digital health implementer with growing capability across identity and workflow orchestration for government services.',
+      dpgs: [['DHIS2', true], ['OpenFn', false], ['MOSIP', false]],
+      base: 'Nairobi',
+      since: '10+ years',
+    },
+    {
+      name: 'OpenG2P Implementation Hub',
+      region: 'South Asia · Africa',
+      desc: 'Specialised implementer for identity-linked government-to-person payment programmes, integrating MOSIP, OpenSPP and Mifos as a coherent stack.',
+      dpgs: [['MOSIP', true], ['OpenSPP', false], ['Mifos', false]],
+      base: 'Bangalore',
+      since: '4+ years',
+    },
+    {
+      name: 'Newlogic',
+      region: 'Southeast Asia · global',
+      desc: 'Lead implementation partner for OpenSPP with active integration experience into MOSIP, OpenCRVS and payment infrastructure.',
+      dpgs: [['OpenSPP', true], ['MOSIP', false], ['OpenCRVS', false]],
+      base: 'Manila',
+      since: '6+ years',
+    },
+    {
+      name: 'eGovernments Foundation',
+      region: 'India · South Asia · Africa',
+      desc: 'Public-purpose digital implementer with multi-DPG experience supporting national identity, registration and service delivery programmes.',
+      dpgs: [['MOSIP', true], ['OpenCRVS', false], ['OpenSPP', false]],
+      base: 'Bangalore',
+      since: '20+ years',
+    },
+    {
+      name: 'Thoughtworks Public Sector',
+      region: 'Global',
+      desc: 'Large-scale digital transformation delivery partner with experience embedding multiple DPGs into national digital government programmes.',
+      dpgs: [['MOSIP', true], ['OpenFn', false], ['Mifos', false]],
+      base: 'Global',
+      since: '8+ years',
+    },
+  ];
+
+  function renderPartners() {
+    const host = document.getElementById('partners-grid');
+    host.innerHTML = PARTNERS.map(p => `
+      <div class="partner-card">
+        <div class="partner-head">
+          <div class="partner-name">${p.name}</div>
+          <div class="partner-region">${p.region}</div>
+        </div>
+        <p class="partner-desc">${p.desc}</p>
+        <div class="partner-dpgs">
+          ${p.dpgs.map(d => `<span class="dpg-tag ${d[1] ? 'lead' : ''}">${d[0]}</span>`).join('')}
+        </div>
+        <div class="partner-meta">
+          <div><span class="label">HQ</span><span class="value">${p.base}</span></div>
+          <div><span class="label">Track record</span><span class="value">${p.since}</span></div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // Initial renders
+  renderCanvas();
+</script>
+
+</body>
+</html>
