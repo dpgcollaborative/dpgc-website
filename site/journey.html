@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1f33">
 <title>Life Journey — DPG Collaborative for Digital Public Services</title>
 <meta name="description" content="Follow one citizen through the moments where the state and citizen meet, and see the high-level architecture of Digital Public Goods that supports each life event.">
 
@@ -20,6 +21,8 @@
 </head>
 <body>
 
+<a class="skip-link" href="#content">Skip to content</a>
+
 <nav>
   <div class="wrap">
     <a class="brand" href="index.html">
@@ -32,7 +35,10 @@
       </svg>
       <div><b>DPG Collaborative</b><span>for Digital Public Services</span></div>
     </a>
-    <div class="nlinks">
+    <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="navlinks">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div class="nlinks" id="navlinks">
       <a href="index.html#value">What this enables</a>
       <a href="index.html#principles">Our commitments</a>
       <a href="index.html#members">Members</a>
@@ -42,7 +48,7 @@
   </div>
 </nav>
 
-<div class="intro">
+<div class="intro" id="content">
   <div class="eyebrow">Follow one citizen — Amara</div>
   <h1>One life, many moments where the state and citizen meet.</h1>
   <p>Pick a life event, choose a use case, and see the high-level architecture of Digital Public Goods that supports it — and how they hand off to each other.</p>
@@ -71,6 +77,7 @@
   Diagrams are illustrative — they show roles and hand-offs between Digital Public Goods, not deployment topology.
 </div>
 
+<script src="assets/js/nav.js" defer></script>
 <script src="assets/js/journey.js"></script>
 </body>
 </html>

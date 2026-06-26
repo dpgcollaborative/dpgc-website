@@ -19,6 +19,16 @@ body{font-family:'Inter',system-ui,sans-serif;color:var(--ink);background:var(--
 a{color:inherit;text-decoration:none}
 h1,h2,h3{line-height:1.12;letter-spacing:-0.02em;font-weight:600}
 
+/* ---- Accessibility ---- */
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:4px}
+.btn-pri:focus-visible{outline-color:#03252a}
+.skip-link{position:fixed;left:12px;top:-60px;z-index:100;background:var(--teal);color:#03252a;padding:10px 16px;border-radius:7px;font-size:14px;font-weight:600;transition:top .15s}
+.skip-link:focus{top:12px}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms !important;animation-duration:.01ms !important}
+}
+
 /* ---- Nav ---- */
 nav{position:sticky;top:0;z-index:50;background:rgba(11,31,51,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,255,255,.08);}
 nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
@@ -32,7 +42,31 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:6
 .nlinks a.active{color:#fff}
 .nbtn{border:1px solid rgba(255,255,255,.25);padding:8px 16px;border-radius:6px;color:#fff !important;font-size:13px;}
 .nbtn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.45)}
-@media(max-width:820px){.nlinks a:not(.nbtn){display:none}}
+
+/* Hamburger: hidden on desktop, shown when the link row collapses. */
+.nav-burger{display:none;background:none;border:1px solid rgba(255,255,255,.18);border-radius:7px;padding:7px;color:#fff;cursor:pointer;line-height:0}
+.nav-burger svg{width:20px;height:20px;display:block}
+.nav-burger:hover{background:rgba(255,255,255,.08)}
+
+@media(max-width:820px){
+  .nav-burger{display:inline-flex;align-items:center;justify-content:center}
+  /* Links drop into a panel under the bar; the bar keeps brand + burger. */
+  .nlinks{
+    position:absolute;top:64px;left:0;right:0;
+    flex-direction:column;align-items:stretch;gap:0;
+    background:var(--navy);
+    border-bottom:1px solid rgba(255,255,255,.10);
+    box-shadow:0 12px 24px -16px rgba(0,0,0,.6);
+    padding:6px 0;
+    max-height:0;overflow:hidden;visibility:hidden;
+    transition:max-height .24s ease,visibility 0s linear .24s;
+  }
+  nav.open .nlinks{max-height:340px;visibility:visible;transition:max-height .26s ease}
+  .nlinks a{padding:13px 32px;font-size:15px}
+  .nlinks a:hover{background:rgba(255,255,255,.06)}
+  .nbtn{border:none;border-radius:0;color:#5fd6d6 !important;padding:13px 32px}
+  .nbtn:hover{background:rgba(255,255,255,.06);border:none}
+}
 
 /* ---- Buttons ---- */
 .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 22px;border-radius:7px;font-size:14.5px;font-weight:500;transition:.15s;}

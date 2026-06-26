@@ -102,3 +102,10 @@ body{font-size:15px}
   .explorer{grid-template-columns:1fr}
   .col-events,.col-cases{border-right:none;border-bottom:1px solid var(--rule)}
 }
+
+/* Below ~560px the SVG would shrink its labels to ~8px; let it scroll
+   horizontally instead so the flow stays legible. */
+@media (max-width:560px){
+  .canvas{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .canvas svg{min-width:460px}
+}

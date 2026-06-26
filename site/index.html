@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1f33">
 <title>DPG Collaborative for Digital Public Services</title>
 <meta name="description" content="The DPG Collaborative for Digital Public Services brings together leading Digital Public Goods so governments can design, procure and deliver integrated, citizen-centric public services at scale.">
 
@@ -21,6 +22,8 @@
 </head>
 <body>
 
+<a class="skip-link" href="#top">Skip to content</a>
+
 <nav>
   <div class="wrap">
     <a class="brand" href="#top">
@@ -33,7 +36,10 @@
       </svg>
       <div><b>DPG Collaborative</b><span>for Digital Public Services</span></div>
     </a>
-    <div class="nlinks">
+    <button class="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="navlinks">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+    <div class="nlinks" id="navlinks">
       <a href="#value">What this enables</a>
       <a href="#principles">Our commitments</a>
       <a href="#members">Members</a>
@@ -180,5 +186,6 @@
   <div class="wrap"><div class="fnote">DPG Collaborative for Digital Public Services. Members: DHIS2 &middot; Mifos &middot; MOSIP &middot; OpenCRVS &middot; OpenFn &middot; OpenSPP.</div></div>
 </footer>
 
+<script src="assets/js/nav.js" defer></script>
 </body>
 </html>
