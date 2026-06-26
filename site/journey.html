@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Life Journey — DPG Collaborative for Digital Public Services</title>
+<meta name="description" content="Follow one citizen through the moments where the state and citizen meet, and see the high-level architecture of Digital Public Goods that supports each life event.">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DPG Collaborative">
+<meta property="og:title" content="Life Journey — DPG Collaborative">
+<meta property="og:description" content="One life, many moments where the state and citizen meet. See how Digital Public Goods hand off to each other.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Life Journey — DPG Collaborative">
+<meta name="twitter:description" content="One life, many moments where the state and citizen meet.">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/journey.css">
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg class="mark" viewBox="0 0 32 32" fill="none">
+        <rect x="2" y="2" width="12" height="12" rx="2.5" fill="#0fa3a3"/>
+        <rect x="18" y="2" width="12" height="12" rx="2.5" fill="#3a5d7d"/>
+        <rect x="2" y="18" width="12" height="12" rx="2.5" fill="#3a5d7d"/>
+        <rect x="18" y="18" width="12" height="12" rx="2.5" fill="#0fa3a3"/>
+        <path d="M14 8h4M8 14v4M24 14v4M14 24h4" stroke="#9fe6e6" stroke-width="1.6"/>
+      </svg>
+      <div><b>DPG Collaborative</b><span>for Digital Public Services</span></div>
+    </a>
+    <div class="nlinks">
+      <a href="index.html#value">What this enables</a>
+      <a href="index.html#principles">Our commitments</a>
+      <a href="index.html#members">Members</a>
+      <a href="journey.html" class="active">Life journey</a>
+      <a href="index.html#doors" class="nbtn">Engage</a>
+    </div>
+  </div>
+</nav>
+
+<div class="intro">
+  <div class="eyebrow">Follow one citizen — Amara</div>
+  <h1>One life, many moments where the state and citizen meet.</h1>
+  <p>Pick a life event, choose a use case, and see the high-level architecture of Digital Public Goods that supports it — and how they hand off to each other.</p>
+  <div class="preview-note">Preview · Birth is fully detailed; other life events show their planned use cases</div>
+</div>
+
+<div class="explorer">
+  <div class="panel col-events">
+    <div class="panel-head">Life events</div>
+    <div class="events-list" id="eventsList"></div>
+  </div>
+  <div class="panel col-cases">
+    <div class="panel-head">Use cases <span id="caseCount" style="color:var(--rule)"></span></div>
+    <div class="cases-list" id="casesList"></div>
+  </div>
+  <div class="panel col-schema">
+    <div class="schema-title">
+      <h2 id="schemaTitle">Select a use case</h2>
+      <p id="schemaSummary">The supporting DPG architecture appears here.</p>
+    </div>
+    <div class="schema-body" id="schemaBody"></div>
+  </div>
+</div>
+
+<div class="foot">
+  Diagrams are illustrative — they show roles and hand-offs between Digital Public Goods, not deployment topology.
+</div>
+
+<script src="assets/js/journey.js"></script>
+</body>
+</html>
