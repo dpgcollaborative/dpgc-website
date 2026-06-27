@@ -1,6 +1,6 @@
 /* ============================================================
    home.css — homepage-specific sections (hero, value tiles,
-   principles, members, engagement doors).
+   principles, participating DPGs, engagement doors).
    ============================================================ */
 
 /* ---- Hero ---- */
@@ -32,7 +32,7 @@
 @media(max-width:820px){.pgrid{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.pgrid{grid-template-columns:1fr}}
 
-/* ---- Members ---- */
+/* ---- Participating DPGs ---- */
 .mrow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:44px}
 .mchip{border:1px solid var(--line);border-radius:12px;background:var(--white);padding:26px 28px;text-align:left;transition:.18s;display:flex;flex-direction:column;gap:16px;}
 .mchip:hover{border-color:var(--teal);box-shadow:0 6px 24px -12px rgba(11,31,51,.2)}
